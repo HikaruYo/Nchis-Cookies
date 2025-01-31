@@ -215,6 +215,8 @@ const Product = () => {
                 </li>
               ))}
             </ul>  
+            <h3 className='font-bold mt-2'>Total:
+              Rp. {cart.reduce((total, item) => total + item.price, 0).toLocaleString("id-ID")}</h3>
             <div className='flex space-x-10 mt-6'>
             <button onClick={resetCart} className="px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-700 transition duration-300">
               Reset
