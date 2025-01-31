@@ -2,4 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+.toast-custom {
+    background-color: white !important; /* Cokelat */
+    color: #78350f !important;
+  }
   
