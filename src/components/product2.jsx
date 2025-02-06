@@ -123,13 +123,15 @@ const Product = () => {
       if (existingItemIndex !== -1) {
         const updatedCart = [...prevCart];
         updatedCart[existingItemIndex].quantity += 1;
+        updatedCart[existingItemIndex].totalPrice =
+          updatedCart[existingItemIndex].quantity * price;
         return updatedCart;
       } else {
-        return [...prevCart, { productName, variant, price, quantity: 1 }];
+        return [...prevCart, { productName, variant, price, quantity: 1, totalPrice: price }];
       }
     });
 
-    toast.success(`${productName} (${variant}) ditambahkan ke keranjang!`,{className:"toast-custom"}, {
+    toast.success(`${productName} (${variant}) ditambahkan ke keranjang!`, {className:"toast-custom"}, {
       position: "top-right",
       autoClose: 3500,
       hideProgressBar: false,
@@ -137,8 +139,8 @@ const Product = () => {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      className:'toast-custom',
-      style: {backgroundColor:"fff", color:"#78350f"}
+      className: 'toast-custom',
+      style: { backgroundColor: "#fff", color: "#78350f" }
     });
   };
 
@@ -181,18 +183,17 @@ const Product = () => {
       <ToastContainer toastStyle={{backgroundColor:"#fff", color:"#78350f"}}/>
       <h1 className='text-center lg:font-bold font-semibold lg:text-5xl text-3xl mb-8 text-white'>Product</h1>
       <div>
-  {categories.map((category, index) => (
-    <ProductCategory
-      key={index}
-      title={category.title}
-      data={category.data}
-      addToCart={addToCart}
-      image={category.image}
-      isBundle={category.isBundle}
-    />
-  ))}
-</div>
-
+        {categories.map((category, index) => (
+          <ProductCategory
+            key={index}
+            title={category.title}
+            data={category.data}
+            addToCart={addToCart}
+            image={category.image}
+            isBundle={category.isBundle}
+          />
+        ))}
+      </div>
 
       {/* Cart */}
       <div className="min-h-auto flex items-center justify-center pt-8 px-4 sm:px-6 lg:px-8">
@@ -214,16 +215,18 @@ const Product = () => {
                   </div>
                 </li>
               ))}
-            </ul>  
+            </ul>
             <h3 className='font-bold mt-2'>Total:
-              Rp. {cart.reduce((total, item) => total + item.price, 0).toLocaleString("id-ID")}</h3>
+              Rp. {cart.reduce((total, item) => total + item.price * item.quantity, 0).toLocaleString("id-ID")}
+            </h3>
             <div className='flex space-x-10 mt-6'>
-            <button onClick={resetCart} className="px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-700 transition duration-300">
-              Reset
-            </button>
-            <button onClick={handleOrder} className="px-6 py-2 bg-amber-700 text-white rounded-full hover:bg-amber-800 transition duration-300">
-              Order Now
-            </button>
+              <button onClick={resetCart}
+                      className="px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-700 transition duration-300">
+                Reset
+              </button>
+              <button onClick={handleOrder} className="px-6 py-2 bg-amber-700 text-white rounded-full hover:bg-amber-800 transition duration-300">
+                Order Now
+              </button>
             </div>
           </div>
         )}
