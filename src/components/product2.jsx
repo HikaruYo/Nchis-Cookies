@@ -34,7 +34,7 @@ const ProductCard = ({ item, isBundle, addToCart, image }) => {
   );
 };
 
-const ProductCategory = ({ title, data, addToCart, image, isBundle = false }) => {
+const ProductTemplate = ({ title, data, addToCart, image, isBundle = false }) => {
   return (
     <>
       <div className="max-w-4xl text-start ml-10 mt-20 text-white">
@@ -184,7 +184,7 @@ const Product = () => {
       <h1 className='text-center lg:font-bold font-semibold lg:text-5xl text-3xl mb-8 text-white'>Product</h1>
       <div>
         {categories.map((category, index) => (
-          <ProductCategory
+          <ProductTemplate
             key={index}
             title={category.title}
             data={category.data}
