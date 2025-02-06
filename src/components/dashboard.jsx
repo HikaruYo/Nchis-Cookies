@@ -1,9 +1,11 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import logo from '../asset/logo.png';
 import shopping from '../asset/shopping.png';
 import add from '../asset/add.png';
 import cookies from '../asset/cookies-about.png';
 import brownies from '../asset/brownies.png';
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
 
@@ -50,7 +52,7 @@ const Dashboard = () => {
               <img src={add} alt='add' className='h-10 w-10 ml-4'/>
             </div>
             <div className='font-bold text-3xl text-center'>
-              <h1>Add</h1>
+              <Link to="/add-product">Add Product</Link>
             </div>
           </button>
         </div>

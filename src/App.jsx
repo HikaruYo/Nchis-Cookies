@@ -7,6 +7,7 @@ import Dashboard from './components/dashboard.jsx';
 import Admin from './pages/admin.jsx';
 import Contact from "./components/contact.jsx";
 import Footer from './components/footer';
+import AddProduct from "./components/addProduct.jsx";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='/' element={<User/>}/>
         <Route path='/home' element={<Home2/>}/>
         <Route path='Admin-Dashboard' element={<Admin/>}/>
+        <Route path="/add-product" element={<AddProduct />} />
       </Routes>
     </BrowserRouter>    
       </div>
