@@ -7,6 +7,7 @@ import Dashboard from './components/dashboard.jsx';
 import Admin from './pages/admin.jsx';
 import Contact from "./components/contact.jsx";
 import Footer from './components/footer';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 function App() {
   return (
@@ -15,8 +16,22 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path='/' element={<User/>}/>
-        <Route path='/home' element={<Home2/>}/>
-        <Route path='Admin-Dashboard' element={<Admin/>}/>
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <Home2/>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedRoute>
+              <Admin/>
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>    
       </div>

@@ -58,7 +58,7 @@ const Navbar = () => {
         <div className="flex items-center lg:mx-20">
           {user && <span className="text-white font-medium mr-4">Hello, {user.displayName}</span>}
           <button
-            className="bg-amber-800 border border-white lg:w-28 lg:h-10 w-20 h-8 flex justify-center items-center rounded-lg text-white font-medium hover:bg-amber-700 transition duration-300"
+            className="bg-red-600 border border-white lg:w-28 lg:h-10 w-20 h-8 flex justify-center items-center rounded-lg text-white font-medium hover:bg-red-700 transition duration-300"
             onClick={handleLogout}
           >
             Logout
