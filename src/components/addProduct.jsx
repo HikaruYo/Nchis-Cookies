@@ -71,7 +71,7 @@ const AddProduct = ({ onClose }) => {
   };
 
   return (
-    <div className="p-5 bg-white rounded-lg shadow-lg max-w-lg mx-auto">
+    <div className="p-5 bg-white rounded-lg max-w-lg mx-auto">
       <h1 className="text-2xl font-bold mb-4">Tambah Produk</h1>
 
       <input type="text" placeholder="Nama Produk" value={productName} onChange={(e) => setProductName(e.target.value)} className="border p-2 mb-3 w-full rounded" />

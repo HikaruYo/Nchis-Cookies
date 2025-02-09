@@ -1,22 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { db } from "./firebase";
+import { collection, getDocs } from "firebase/firestore";
 import logo from "../asset/logo.png";
 import shopping from "../asset/shopping.png";
 import add from "../asset/add.png";
-import cookies from "../asset/cookies-about.png";
-import brownies from "../asset/brownies.png";
 import AddProduct from "./addProduct.jsx";
 
 const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
+  const [products, setProducts] = useState([]);
 
-  const data = [
-    [brownies, "Choco Cookies1"],
-    [cookies, "Choco Cookies2"],
-    [cookies, "Choco Cookies3"],
-    [brownies, "Choco Cookies3"],
-    [brownies, "Choco Cookies3"],
-    [cookies, "Choco Cookies3"],
-  ];
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "products"));
+        const productList = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            name: data.nama || "Nama tidak tersedia",
+            image: data.imageUrl || "https://example/img.jpg",
+          };
+        });
+        setProducts(productList);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <section className="bg-orange-100 h-screen flex flex-row">
@@ -60,10 +73,10 @@ const Dashboard = () => {
       <div className="w-2/3 flex flex-col gap-8 overflow-auto py-9 px-20">
         <h1 className="text-3xl font-bold">Product</h1>
         <div className="flex flex-col gap-4">
-          {data.map((data, index) => (
-            <div key={index} className="w-11/12 px-14 py-3 bg-white rounded-xl shadow-md shadow-gray-700 flex gap-10">
-              <img src={data[0]} alt="cookies" className="justify-start items-start h-32" />
-              <h1 className="font-bold text-3xl flex-col self-center text-center">{data[1]}</h1>
+          {products.map((product) => (
+            <div key={product.id} className="w-11/12 px-14 py-3 bg-white rounded-xl shadow-md shadow-gray-700 flex gap-10">
+              <img src={product.image} alt={product.name} className="justify-start items-start h-32" />
+              <h1 className="font-bold text-3xl flex-col self-center text-center">{product.name}</h1>
               <div className="flex items-center justify-end gap-4">
                 <button className="bg-sky-400 w-32 h-16 rounded-xl text-white font-semibold text-xl hover:scale-75 transition-transform duration-300">
                   Edit
