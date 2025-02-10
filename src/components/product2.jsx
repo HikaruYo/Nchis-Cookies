@@ -20,7 +20,7 @@ const ProductCard = ({ item, addToCart }) => {
       </h2>
 
       <h2 className="font-light lg:text-lg text-md text-gray-500 mt-2">
-        {item.category || 'Tanpa kategori'}
+        {item.description || 'Tanpa keterangan'}
       </h2>
 
       <h2 className="font-semibold lg:text-2xl text-xl text-amber-600">

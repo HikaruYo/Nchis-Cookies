@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { db, storage } from "./firebase";
+import { db } from "./firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const AddProduct = ({ onClose }) => {
   const [productName, setProductName] = useState("");
@@ -25,6 +24,35 @@ const AddProduct = ({ onClose }) => {
     }
   };
 
+  const uploadImageToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "hikaru");
+    formData.append("cloud_name", "dx5xnee68");
+
+    try {
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/dx5xnee68/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const data = await response.json();
+      console.log("Cloudinary response:", data);
+
+      if (!data.secure_url) {
+        throw new Error("Gagal mengunggah gambar!");
+      }
+
+      return data.secure_url;
+    } catch (error) {
+      console.error("Error uploading image to Cloudinary:", error);
+      return "";
+    }
+  };
+
   const handleAddProduct = async () => {
     if (!productName || !price || !category || !description) {
       alert("Harap isi semua field!");
@@ -36,9 +64,7 @@ const AddProduct = ({ onClose }) => {
 
     try {
       if (image) {
-        const storageRef = ref(storage, `products/${Date.now()}_${image.name}`);
-        await uploadBytes(storageRef, image);
-        imageUrl = await getDownloadURL(storageRef);
+        imageUrl = await uploadImageToCloudinary(image);
       }
 
       await addDoc(collection(db, "products"), {

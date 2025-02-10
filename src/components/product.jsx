@@ -26,12 +26,12 @@ const ProductCard = ({ item, isBundle }) => {
             Lihat Deskripsi
           </summary>
           <p className="mt-2 px-1 font-light text-sm">
-            {item.category || 'Tanpa kategori'}
+            {item.description || 'Tanpa keterangan'}
           </p>
         </details>
       ) : (
         <h2 className="font-light lg:text-lg text-md text-gray-500 mt-2">
-          {item.category || 'Tanpa kategori'}
+          {item.description || 'Tanpa keterangan'}
         </h2>
       )}
 
