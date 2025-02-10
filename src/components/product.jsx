@@ -97,7 +97,6 @@ const Product = () => {
           title: category,
           data: groupedProducts[category],
           image: groupedProducts[category][0]?.image || Cookies,
-          isBundle: category.toLowerCase().includes('bundle'),
         }));
 
         setCategories(categoryList);

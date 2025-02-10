@@ -60,23 +60,42 @@ const Navbar = () => {
         } p-1`}
       >
         <div className="flex lg:justify-between items-center lg:px-20 px-4 py-2">
-          <img src={logo} alt="logo" className="w-20 h-20 lg:h-28 lg:w-28" />
+          <img src={logo} alt="logo" className="w-20 h-20 lg:h-28 lg:w-28"/>
 
-          <div className="flex gap-3 items-center">
-            <button
-              className="bg-amber-800 border border-white w-20 lg:w-28 h-8 lg:h-10 flex items-center rounded-lg text-white font-medium hover:bg-amber-700 transition duration-300 px-2"
-              onClick={handleGoogleLogin}
-            >
-              <img src={google} alt="login" className="w-4 lg:w-6" />
-              <span className="ml-2 text-sm lg:text-md">Login</span>
-            </button>
+          <div className="flex flex-col lg:flex-row justify-center">
+            <a href="#home"
+               className="text-white hover:text-yellow-400 mx-2 lg:mx-6 my-2 lg:my-0 lg:text-xl lg:font-semibold transition duration-300">
+              Home
+            </a>
+            <a href="#about"
+               className="text-white hover:text-yellow-400 mx-2 lg:mx-6 my-2 lg:my-0 lg:text-xl lg:font-semibold transition duration-300">
+              About
+            </a>
+            <a href="#product"
+               className="text-white hover:text-yellow-400 mx-2 lg:mx-6 my-2 lg:my-0 lg:text-xl lg:font-semibold transition duration-300">
+              Product
+            </a>
+            <a href="#contact"
+               className="text-white hover:text-yellow-400 mx-2 lg:mx-6 my-2 lg:my-0 lg:text-xl lg:font-semibold transition duration-300">
+              Contact Us
+            </a>
 
-            <button
-              className="bg-gray-700 border border-white w-20 lg:w-28 h-8 lg:h-10 flex items-center rounded-lg text-white font-medium hover:bg-gray-600 transition duration-300 px-2"
-              onClick={() => setShowLoginForm(true)}
-            >
-              <span className="mx-auto text-sm lg:text-md">Admin</span>
-            </button>
+            <div className="flex gap-3 items-center">
+              <button
+                className="bg-amber-800 border border-white w-20 lg:w-28 h-8 lg:h-10 flex items-center rounded-lg text-white font-medium hover:bg-amber-700 transition duration-300 px-2"
+                onClick={handleGoogleLogin}
+              >
+                <img src={google} alt="login" className="w-4 lg:w-6"/>
+                <span className="ml-2 text-sm lg:text-md">Login</span>
+              </button>
+
+              <button
+                className="bg-gray-700 border border-white w-20 lg:w-28 h-8 lg:h-10 flex items-center rounded-lg text-white font-medium hover:bg-gray-600 transition duration-300 px-2"
+                onClick={() => setShowLoginForm(true)}
+              >
+                <span className="mx-auto text-sm lg:text-md">Admin</span>
+              </button>
+            </div>
           </div>
         </div>
       </nav>

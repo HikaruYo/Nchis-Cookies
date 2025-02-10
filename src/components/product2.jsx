@@ -19,20 +19,9 @@ const ProductCard = ({ item, addToCart }) => {
         {item.name || 'Tidak ada nama'}
       </h2>
 
-      {isBundle ? (
-        <details className="text-gray-500 text-center mt-2">
-          <summary className="font-light lg:text-lg text-md cursor-pointer">
-            Lihat Deskripsi
-          </summary>
-          <p className="mt-2 px-1 font-light text-sm">
-            {item.category || 'Tanpa kategori'}
-          </p>
-        </details>
-      ) : (
-        <h2 className="font-light lg:text-lg text-md text-gray-500 mt-2">
-          {item.category || 'Tanpa kategori'}
-        </h2>
-      )}
+      <h2 className="font-light lg:text-lg text-md text-gray-500 mt-2">
+        {item.category || 'Tanpa kategori'}
+      </h2>
 
       <h2 className="font-semibold lg:text-2xl text-xl text-amber-600">
         {item.price ? `Rp. ${item.price.toLocaleString('id-ID')}` : 'Harga tidak tersedia'}
@@ -48,7 +37,7 @@ const ProductCard = ({ item, addToCart }) => {
   );
 };
 
-const ProductTemplate = ({ title, data, image, isBundle = false }) => {
+const ProductTemplate = ({ title, data, image, addToCart = false }) => {
   return (
     <>
       <div className="max-w-4xl text-start ml-10 mt-20 text-white">
@@ -56,13 +45,12 @@ const ProductTemplate = ({ title, data, image, isBundle = false }) => {
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-y-10 gap-y-4 mx-6 md:mx-36 mt-11">
         {data.map((item) => (
-          <ProductCard key={item.id} item={item} isBundle={isBundle} />
+          <ProductCard key={item.id} item={item} addToCart={addToCart} image={image} />
         ))}
       </div>
     </>
   );
 };
-
 
 const Product = () => {
   const [categories, setCategories] = useState([]);
@@ -99,7 +87,6 @@ const Product = () => {
           title: category,
           data: groupedProducts[category],
           image: groupedProducts[category][0]?.image || Cookies,
-          isBundle: category.toLowerCase().includes('bundle'),
         }));
 
         setCategories(categoryList);
@@ -125,7 +112,7 @@ const Product = () => {
       }
     });
 
-    toast.success(`${product.name} (${product.variant}) ditambahkan ke keranjang!`);
+    toast.success(`${product.name} (${product.category}) ditambahkan ke keranjang!`);
   };
 
   const removeFromCart = (index) => {
@@ -149,11 +136,13 @@ const Product = () => {
     if (cart.length === 0) return;
 
     const itemsList = cart
-      .map((item, index) => `${index + 1}. ${item.name} - ${item.variant} - Rp. ${item.price.toLocaleString("id-ID")}`)
+      .map((item, index) => `${index + 1}. ${item.name} - ${item.category} - Rp. ${item.price.toLocaleString("id-ID")}`)
       .join('\n');
 
     const totalPrice = cart.reduce((total, item) => total + item.totalPrice, 0);
 
+    // TO DO
+    // add jumlah barang
     const message = `Halo Kak, saya ingin memesan:\n\n${itemsList}\n\nTotal Harga: Rp. ${totalPrice.toLocaleString("id-ID")}\n\nTerima kasih!`;
 
     const encodedMessage = encodeURIComponent(message);
@@ -165,29 +154,45 @@ const Product = () => {
 
   return (
     <section id="product" className='min-h-screen flex flex-col'>
-      <ToastContainer />
+      <ToastContainer/>
       <h1 className='text-center lg:font-bold font-semibold lg:text-5xl text-3xl mb-8 text-white'>Product</h1>
+
+      <div>
+        {categories.map((category, index) => (
+          <ProductTemplate
+            key={index}
+            title={category.title}
+            data={category.data}
+            image={category.image}
+            addToCart={addToCart}
+          />
+        ))}
+      </div>
+
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-y-10 gap-y-4 mx-6 md:mx-36 mt-11">
         {products.map((item) => (
-          <ProductCard key={item.id} item={item} addToCart={addToCart} />
+          <ProductCard key={item.id} item={item} addToCart={addToCart}/>
         ))}
       </div>
 
       {/* Cart */}
       {cart.length > 0 && (
         <div className="min-h-auto flex items-center justify-center pt-8 px-4 sm:px-6 lg:px-8">
-          <div className="w-full max-w-4xl bg-amber-900 bg-opacity-50 border-2 border-amber-800 rounded-lg text-white p-6 flex flex-col items-center mt-10 shadow-md">
+          <div
+            className="w-full max-w-4xl bg-amber-900 bg-opacity-50 border-2 border-amber-800 rounded-lg text-white p-6 flex flex-col items-center mt-10 shadow-md">
             <h2 className="text-xl font-semibold mb-4">Keranjang</h2>
             <ul className="w-full space-y-4">
               {cart.map((item, index) => (
-                <li key={index} className="flex flex-wrap justify-between items-center w-full bg-amber-800 bg-opacity-40 p-4 rounded-md">
+                <li key={index}
+                    className="flex flex-wrap justify-between items-center w-full bg-amber-800 bg-opacity-40 p-4 rounded-md">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
                     <span className="font-medium">{item.name}</span>
                     <span className="text-sm text-gray-200">{item.category}</span>
                     <span className="text-sm text-gray-200">x{item.quantity}</span>
                   </div>
                   <div className="flex items-center mt-2 sm:mt-0 space-x-4">
-                    <button onClick={() => removeFromCart(index)} className="text-red-400 hover:text-red-600 transition">
+                    <button onClick={() => removeFromCart(index)}
+                            className="text-red-400 hover:text-red-600 transition">
                       Hapus
                     </button>
                   </div>
@@ -198,10 +203,12 @@ const Product = () => {
               Rp. {cart.reduce((total, item) => total + item.totalPrice, 0).toLocaleString("id-ID")}
             </h3>
             <div className='flex space-x-10 mt-6'>
-              <button onClick={resetCart} className="px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-700 transition duration-300">
+              <button onClick={resetCart}
+                      className="px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-700 transition duration-300">
                 Reset
               </button>
-              <button onClick={handleOrder} className="px-6 py-2 bg-amber-700 text-white rounded-full hover:bg-amber-800 transition duration-300">
+              <button onClick={handleOrder}
+                      className="px-6 py-2 bg-amber-700 text-white rounded-full hover:bg-amber-800 transition duration-300">
                 Order Now
               </button>
             </div>
