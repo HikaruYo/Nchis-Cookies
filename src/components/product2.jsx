@@ -136,7 +136,7 @@ const Product = () => {
     if (cart.length === 0) return;
 
     const itemsList = cart
-      .map((item, index) => `${index + 1}. ${item.name} - ${item.category} - Rp. ${item.price.toLocaleString("id-ID")}`)
+      .map((item, index) => `${index + 1}. ${item.name} - ${item.quantity} - Rp. ${item.price.toLocaleString("id-ID")}`)
       .join('\n');
 
     const totalPrice = cart.reduce((total, item) => total + item.totalPrice, 0);
@@ -187,7 +187,8 @@ const Product = () => {
                     className="flex flex-wrap justify-between items-center w-full bg-amber-800 bg-opacity-40 p-4 rounded-md">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
                     <span className="font-medium">{item.name}</span>
-                    <span className="text-sm text-gray-200">{item.category}</span>
+                    <span className="text-sm text-gray-200">Rp. {item.price}</span>
+                    <span className="text-sm text-gray-200">{item.description}</span>
                     <span className="text-sm text-gray-200">x{item.quantity}</span>
                   </div>
                   <div className="flex items-center mt-2 sm:mt-0 space-x-4">

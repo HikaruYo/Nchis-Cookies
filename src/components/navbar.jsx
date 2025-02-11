@@ -4,17 +4,18 @@ import google from "../asset/google.png";
 import { auth, provider, signInWithPopup } from "./firebase";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "./userContext";
-import { Eye, EyeOff } from "lucide-react"; // Import ikon
+import { Eye, EyeOff, Menu, X } from "lucide-react";
 
-const ADMIN_EMAIL = "chachaius@yahoo.com";
-const ADMIN_PASSWORD = "Nchis-Cookies2025";
+const ADMIN_EMAIL = "admin@gmail.com";
+const ADMIN_PASSWORD = "admin";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [adminEmail, setAdminEmail] = useState("");
   const [adminPassword, setAdminPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // State untuk show/hide password
+  const [showPassword, setShowPassword] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const { user, setUser } = useUser();
   const navigate = useNavigate();
 
@@ -26,7 +27,6 @@ const Navbar = () => {
       alert(`Welcome, ${user.displayName}`);
       navigate("/home");
     } catch (error) {
-      console.error("Error during login:", error.message);
       alert(`Login failed: ${error.message}`);
     }
   };
@@ -47,7 +47,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 0);
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -56,52 +56,44 @@ const Navbar = () => {
     <>
       <nav
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-          isScrolled ? "bg-white/10 backdrop-blur-lg shadow-lg" : "bg-amber-950/0 lg:bg-black"
-        } p-1`}
+          isScrolled ? "bg-white/20 backdrop-blur-lg shadow-lg" : "bg-transparent lg:bg-black"
+        } p-3`}
       >
-        <div className="flex lg:justify-between items-center lg:px-20 px-4 py-2">
-          <img src={logo} alt="logo" className="w-20 h-20 lg:h-28 lg:w-28"/>
+        <div className="flex justify-between items-center px-5 lg:px-20 py-2">
+          <img src={logo} alt="logo" className="w-16 h-16 lg:h-20 lg:w-20" />
 
-          <div className="flex flex-col lg:flex-row justify-center">
-            <a href="#home"
-               className="text-white hover:text-yellow-400 mx-2 lg:mx-6 my-2 lg:my-0 lg:text-xl lg:font-semibold transition duration-300">
-              Home
-            </a>
-            <a href="#about"
-               className="text-white hover:text-yellow-400 mx-2 lg:mx-6 my-2 lg:my-0 lg:text-xl lg:font-semibold transition duration-300">
-              About
-            </a>
-            <a href="#product"
-               className="text-white hover:text-yellow-400 mx-2 lg:mx-6 my-2 lg:my-0 lg:text-xl lg:font-semibold transition duration-300">
-              Product
-            </a>
-            <a href="#contact"
-               className="text-white hover:text-yellow-400 mx-2 lg:mx-6 my-2 lg:my-0 lg:text-xl lg:font-semibold transition duration-300">
-              Contact Us
-            </a>
-
+          <div className={`lg:flex gap-6 text-start ${menuOpen ? "absolute top-20 left-0 w-full bg-black/90 flex flex-col items-center py-5" : "hidden lg:flex"}`}>
+            {["Home", "About", "Product", "Contact Us"].map((item) => (
+              <a key={item} href={`#${item.toLowerCase()}`} className="text-white hover:text-yellow-400 text-lg font-semibold py-2 px-4 text-start">
+                {item}
+              </a>
+            ))}
           </div>
-            <div className="flex gap-3 items-center">
-              <button
-                className="bg-amber-800 border border-white w-20 lg:w-28 h-8 lg:h-10 flex items-center rounded-lg text-white font-medium hover:bg-amber-700 transition duration-300 px-2"
-                onClick={handleGoogleLogin}
-              >
-                <img src={google} alt="login" className="w-4 lg:w-6"/>
-                <span className="ml-2 text-sm lg:text-md">Login</span>
-              </button>
 
-              <button
-                className="bg-gray-700 border border-white w-20 lg:w-28 h-8 lg:h-10 flex items-center rounded-lg text-white font-medium hover:bg-gray-600 transition duration-300 px-2"
-                onClick={() => setShowLoginForm(true)}
-              >
-                <span className="mx-auto text-sm lg:text-md">Admin</span>
-              </button>
-            </div>
+          <div className="flex items-center gap-2">
+            <button
+              className="flex bg-amber-800 border border-white w-24 h-10 items-center rounded-lg text-white font-medium hover:bg-amber-700 px-3"
+              onClick={handleGoogleLogin}
+            >
+              <img src={google} alt="login" className="w-5" />
+              <span className="ml-2">Login</span>
+            </button>
+            <button onClick={() => setMenuOpen(!menuOpen)} className="lg:hidden">
+              {menuOpen ? <X size={28} className="text-white" /> : <Menu size={28} className="text-white" />}
+            </button>
+
+            <button
+            className="hidden lg:flex bg-gray-700 border border-white w-24 h-10 items-center justify-center rounded-lg text-white font-medium hover:bg-gray-600 px-3"
+            onClick={() => setShowLoginForm(true)}
+          >
+            Admin
+          </button>
+          </div>
         </div>
       </nav>
 
-      {/* Modal Login Admin */}
-      {showLoginForm && (
+       {/* Modal Login Admin */}
+       {showLoginForm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[9999]">
           <div className="bg-white p-6 rounded-2xl shadow-xl w-80 border border-[#D7CCC8]">
             <h2 className="text-2xl font-bold text-[#5D4037] text-center mb-4">Admin Login</h2>
@@ -135,7 +127,6 @@ const Navbar = () => {
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
-
               <div className="flex justify-between">
                 <button
                   type="button"
@@ -154,7 +145,7 @@ const Navbar = () => {
             </form>
           </div>
         </div>
-      )}
+       )}
     </>
   );
 };

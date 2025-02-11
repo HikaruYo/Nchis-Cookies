@@ -4,7 +4,7 @@ import { IoLogoWhatsapp } from "react-icons/io"
 
 const contact = () => {
   return (
-    <div id="contact" className="py-16">
+    <div id="contact us" className="py-16">
       <div className="md:mx-36 text-white">
         <h1 className="text-2xl text-start mx-6 font-bold py-8 pt-10">
           Contact Us
