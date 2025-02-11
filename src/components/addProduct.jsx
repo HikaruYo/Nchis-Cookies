@@ -18,7 +18,7 @@ const AddProduct = ({ onClose }) => {
       setImage(file);
       setImagePreview(URL.createObjectURL(file));
     } else {
-      alert("Silakan pilih file gambar!");
+      alert("Choose yor File Image");
       setImage(null);
       setImagePreview(null);
     }
@@ -43,7 +43,7 @@ const AddProduct = ({ onClose }) => {
       console.log("Cloudinary response:", data);
 
       if (!data.secure_url) {
-        throw new Error("Gagal mengunggah gambar!");
+        throw new Error("Failed to Upload Image!");
       }
 
       return data.secure_url;
@@ -55,7 +55,7 @@ const AddProduct = ({ onClose }) => {
 
   const handleAddProduct = async () => {
     if (!productName || !price || !category || !description) {
-      alert("Harap isi semua field!");
+      alert("Please fill this field!");
       return;
     }
 
@@ -76,12 +76,12 @@ const AddProduct = ({ onClose }) => {
         createdAt: serverTimestamp(),
       });
 
-      alert("Produk berhasil ditambahkan!");
+      alert("Product added Succesfully!");
       resetForm();
       onClose();
     } catch (error) {
-      console.error("Gagal menambahkan produk:", error);
-      alert("Terjadi kesalahan!");
+      console.error("Cancel added Product:", error);
+      alert("Something went Wrong");
     }
 
     setLoading(false);
@@ -100,10 +100,10 @@ const AddProduct = ({ onClose }) => {
     <div className="p-5 bg-white rounded-lg max-w-lg mx-auto">
       <h1 className="text-2xl font-bold mb-4">Tambah Produk</h1>
 
-      <input type="text" placeholder="Nama Produk" value={productName} onChange={(e) => setProductName(e.target.value)} className="border p-2 mb-3 w-full rounded" />
-      <input type="number" placeholder="Harga Produk" value={price} onChange={(e) => setPrice(e.target.value)} className="border p-2 mb-3 w-full rounded" />
-      <input type="text" placeholder="Kategori" value={category} onChange={(e) => setCategory(e.target.value)} className="border p-2 mb-3 w-full rounded" />
-      <textarea placeholder="Keterangan Produk" value={description} onChange={(e) => setDescription(e.target.value)} className="border p-2 mb-3 w-full rounded"></textarea>
+      <input type="text" placeholder="Product Name" value={productName} onChange={(e) => setProductName(e.target.value)} className="border p-2 mb-3 w-full rounded" />
+      <input type="number" placeholder="Price" value={price} onChange={(e) => setPrice(e.target.value)} className="border p-2 mb-3 w-full rounded" />
+      <input type="text" placeholder="Category" value={category} onChange={(e) => setCategory(e.target.value)} className="border p-2 mb-3 w-full rounded" />
+      <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} className="border p-2 mb-3 w-full rounded"></textarea>
 
       <input type="file" accept="image/*" onChange={handleImageChange} className="border p-2 mb-3 w-full rounded" />
 
@@ -113,8 +113,8 @@ const AddProduct = ({ onClose }) => {
         </div>
       )}
 
-      <button onClick={handleAddProduct} className="bg-blue-500 text-white px-4 py-2 w-full rounded hover:bg-blue-600 transition" disabled={loading}>
-        {loading ? "Menambahkan..." : "Tambah Produk"}
+      <button onClick={handleAddProduct} className="bg-amber-700 text-white px-4 py-2 w-full rounded hover:bg-amber-900 transition" disabled={loading}>
+        {loading ? "Adding Product..." : "Submit"}
       </button>
     </div>
   );

@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "./userContext";
 import { Eye, EyeOff } from "lucide-react"; // Import ikon
 
-const ADMIN_EMAIL = "hilariusalan28@gmail.com";
-const ADMIN_PASSWORD = "admin123";
+const ADMIN_EMAIL = "chachaius@yahoo.com";
+const ADMIN_PASSWORD = "Nchis-Cookies2025";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -80,6 +80,7 @@ const Navbar = () => {
               Contact Us
             </a>
 
+          </div>
             <div className="flex gap-3 items-center">
               <button
                 className="bg-amber-800 border border-white w-20 lg:w-28 h-8 lg:h-10 flex items-center rounded-lg text-white font-medium hover:bg-amber-700 transition duration-300 px-2"
@@ -96,7 +97,6 @@ const Navbar = () => {
                 <span className="mx-auto text-sm lg:text-md">Admin</span>
               </button>
             </div>
-          </div>
         </div>
       </nav>
 

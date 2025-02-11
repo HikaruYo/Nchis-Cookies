@@ -93,16 +93,18 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="absolute my-60 gap-y-2">
+    {/* Menu add & list product */}
+    <div>
+      
+    </div>
+      <div className="absolute my-60 mx-20 gap-y-2">
         <h1 className="text-white text-2xl font-bold mr-32">Admin Dashboard</h1>
       </div>
-      <div
-        className='absolute rounded-2xl bg-orange-100 px-44 h-[410px] flex flex-col items-center justify-center my-72'>
+
+     <div
+        className='absolute rounded-2xl bg-orange-100 px-44 mx-20 h-[410px] flex flex-col items-center justify-center my-72'>
         <button
           className='grid-col bg-amber-800 text-white absolute w-72 h-20 rounded-xl shadow-md shadow-gray-700 -mt-28'>
-          <div className='absolute -left-2 bottom-2'>
-            <img src={shopping} alt='shopping' className='h-16 w-16 ml-4'/>
-          </div>
           <div className="font-bold text-3xl text-center">
             <h1>Product</h1>
           </div>
@@ -111,12 +113,9 @@ const Dashboard = () => {
           className="mt-20 grid-col bg-white hover:bg-amber-800 hover:text-white transition duration-300 absolute w-72 h-20 rounded-xl shadow-md shadow-gray-700"
           onClick={() => setShowModal(true)}
         >
-          <div className='absolute -mt-2'>
-            <img src={add} alt='add' className='h-10 w-10 ml-4'/>
-          </div>
           <div className="font-bold text-3xl text-center">Add Product</div>
         </button>
-        <a href='/home'
+        <a href='/'
            className='mt-72 grid-col bg-red-700 hover:bg-red-500 transition duration-300 absolute w-40 h-12 rounded-full shadow-md shadow-gray-700'>
           <div className='font-bold text-2xl mt-2 text-center text-white'>
             <h1>Logout</h1>
@@ -155,11 +154,11 @@ const Dashboard = () => {
           <div className="bg-white p-5 rounded-lg w-96 relative">
             <button onClick={() => setEditProduct(null)} className="absolute top-2 right-2 text-xl font-bold text-gray-600 hover:text-red-500">&times;</button>
             <h2 className="text-2xl font-bold mb-4">Edit Product</h2>
-            <input type="text" className="border w-full p-2 rounded-lg mb-2" value={editData.name} onChange={(e) => setEditData({...editData, name: e.target.value})} placeholder="Nama Produk"/>
-            <input type="text" className="border w-full p-2 rounded-lg mb-2" value={editData.price} onChange={(e) => setEditData({...editData, price: e.target.value})} placeholder="Harga Produk"/>
-            <input type="text" className="border w-full p-2 rounded-lg mb-2" value={editData.category} onChange={(e) => setEditData({...editData, category: e.target.value})} placeholder="Kategori"/>
-            <input type="text" className="border w-full p-2 rounded-lg mb-2" value={editData.description} onChange={(e) => setEditData({...editData, description: e.target.value})} placeholder="Keterangan"/>
-            <button onClick={handleUpdate} className="bg-green-500 text-white px-4 py-2 rounded-lg mt-4">Save Changes</button>
+            <input type="text" className="border w-full p-2 rounded-lg mb-2" value={editData.name} onChange={(e) => setEditData({...editData, name: e.target.value})} placeholder="Product Name"/>
+            <input type="text" className="border w-full p-2 rounded-lg mb-2" value={editData.price} onChange={(e) => setEditData({...editData, price: e.target.value})} placeholder="Price"/>
+            <input type="text" className="border w-full p-2 rounded-lg mb-2" value={editData.category} onChange={(e) => setEditData({...editData, category: e.target.value})} placeholder="Category"/>
+            <input type="text" className="border w-full p-2 rounded-lg mb-2" value={editData.description} onChange={(e) => setEditData({...editData, description: e.target.value})} placeholder="Description"/>
+            <button onClick={handleUpdate} className="bg-amber-800 text-white px-4 py-2 rounded-lg mt-4">Save Changes</button>
           </div>
         </div>
       )}
